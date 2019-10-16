@@ -1,0 +1,21 @@
+---
+- name: Subscribe
+  hosts: ansible
+  gather_facts: no
+  vars_files:
+    - redhat.yml
+  tasks:
+  - name: Subscribe to Red Hat
+    redhat_subscription:
+      username: "{{username}}"
+      password: "{{password}}"
+      pool: "{{pool}}"
+
+  - name: Enable ansible repository
+    rhsm_repository:
+      name: rhel-7-server-ansible-2.8-rpms
+
+  - name: Install Ansible
+    yum:
+      name: ansible
+    state: present
